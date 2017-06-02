@@ -29,4 +29,16 @@ defmodule CardsApi.Card do
     |> cast(params, @required_fields, @optional_fields)
     |> validate_required(@required_fields)
   end
+
+  def search(query, search_term) do
+    from(c in query,
+    where: fragment("? % ?", c.card_color, ^search_term),
+    order_by: fragment("similarity(?, ?) DESC", c.card_color, ^search_term))
+  end
+
+  def search_title(query, search_term) do
+    from(c in query,
+    where: fragment("? % ?", c.title, ^search_term),
+    order_by: fragment("similarity(?, ?) DESC", c.title, ^search_term))
+  end
 end

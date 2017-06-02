@@ -10,5 +10,6 @@ defmodule CardsApi.Router do
 
     resources "/cards", CardController, only: [:index, :show]
     get "/cards/color/:color", CardController, :filter_card
+    
   end
 end
